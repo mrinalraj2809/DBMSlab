@@ -83,21 +83,23 @@ create table indent(
     constraint ID_fk1 foreign key(section_code) references section(section_code),
     constraint ID_fk2 foreign key(ITEM_CODE) references ITEM(ITEM_CODe)
 );
-desc indent;
-
+DELETE FROM item; // to delete all the values already present in the table
+desc item;
 insert into item values('1','soap',20,75,15,50,12);
 insert into item values('2','oap',30,85,25,60,22);
 insert into item values('3','ap',40,95,35,70,32);
 insert into item values('4','p',50,105,45,80,42);
 insert into item values('5','margo',60,115,55,90,52);
+SELECT * from item;
 
+desc section;
 insert into section values('2','sooap');
 insert into section values('3','apsoo');
 insert into section values('4','psoo');
 insert into section values('5','margosoo');
-
 SELECT * from section;
 
+desc cheque;
 insert into cheque values('21','31-may-98',2100000);
 insert into cheque values('31','21-may-98',310000);
 insert into cheque values('41','11-may-98',410000);
@@ -105,6 +107,7 @@ insert into cheque values('51','01-may-98',510000);
 
 SELECT * from cheque;
 
+desc indent;
 insert into indent values('12','4',20,2,5);
 insert into indent values('22','5',30,3,2);
 insert into indent values('32','3',40,4,3);
@@ -112,7 +115,7 @@ insert into indent values('42','2',50,5,5);
 insert into indent values('52','1',60,2,1);
 SELECT * from indent;
 
-
+desc vender;
 insert into vender values('102','praglva','tumkur');
 insert into vender values('202','mihir','patna');
 insert into vender values('302','pranav','jionagar');
@@ -120,7 +123,7 @@ insert into vender values('402','nikhil','bhutan');
 insert into vender values('502','mrinal','nepal');
 SELECT * from vender;
 
-
+desc voucher;
 insert into voucher values('1002','1-may-98',102,21);
 insert into voucher values('2002','2-dec-98',302,31);
 insert into voucher values('3002','3-jan-98',402,41);
@@ -128,6 +131,7 @@ insert into voucher values('4002','4-mar-98',502,51);
 insert into voucher values('5002','5-feb-98',502,21);
 SELECT * from voucher;
 
+desc orders;
 insert into Orders values('111','1-may-98',1002,102,'1-may-99');
 insert into Orders values('222','2-dec-97',2002,102,'1-may-99');
 insert into Orders values('333','2-dec-96',4002,302,'1-may-99');
@@ -135,6 +139,7 @@ insert into Orders values('444','2-dec-95',4002,402,'1-may-99');
 insert into Orders values('555','2-dec-94',5002,502,'1-may-99');
 SELECT * from orders;
 
+desc ordering;
 insert into ordering values('111','4',20);
 insert into ordering values('222','5',3);
 insert into ordering values('222','3',40);
@@ -144,3 +149,13 @@ SELECT * from ordering;
 
 
 //increasing unit price from all item
+select unit_price 
+from item;
+
+select unit_price*1.01 as UP
+from item;
+
+ update item
+ set unit_price = unit_price*1.01
+ ;
+ select * from item;
