@@ -220,3 +220,81 @@ select quantity_issued,ITEM_CODE from indent;
 select I.ITEM_CODE, I.item_description, I.unit_price, N.quantity_issued, N.quantity_issued* I.unit_price as Item_Consumption_RS
 from item I, indent N
 where I.ITEM_CODE= N.ITEM_CODE;
+
+
+/********lab 5*************/
+/**** q1 ****/
+CREATE or replace Trigger T
+before insert on ITEM for each row
+Declare
+Begin 
+IF (:NEW.SOH > :NEW.ROL) THEN
+RAISE_APPLICATION_ERROR(-20010, 'SOH VALUE SHOULD BE LESS THAN ROL');
+END IF;
+END;
+/
+
+insert into item values(123,'ABC',100,13,12,11,130);
+SELECT * FROM ITEM;
+
+insert into item values(12,'ABCD',1000,10,11,12,13);
+SELECT * FROM ITEM;
+
+/**q2***/
+
+create or replace Procedure p1(in_date date) is
+cursor A1 is
+select Orders.order_no, ITEM_CODE
+from orders,ordering
+where order_date = in_date and orders.order_no = ordering.order_no;
+c1 orders.order_no%TYPE;
+c2 ordering.ITEM_CODE%type;
+
+begin 
+open a1;
+fetch a1 into c1,c2;
+loop 
+exit when a1%NOTFOUND;
+
+DbMS_OUTPUT.PUT_LINE('Order No. ' ||c1||'Item Code'||c2);
+fetch a1 into c1,c2;
+end loop;
+close a1;
+end;
+/
+
+select orders.order_no,ITEM_CODE
+from orders,ordering
+where order_date = '01-may-98' and orders.order_no=ordering.order_no;
+set serveroutput on;
+exec P1('06-apr-2012');
+order_no.67item_no5
+
+/***q3**/
+create or replace Procedure p2(code varchar, v_No varchar)
+is
+cursor a2 is
+select count(*) as NO_OF_Orders
+from ordering o2, orders o, indent i
+where o2.ITEM_CODe=i.ITEM_CODE and o.vender_no = v_No and i.ITEM_CODE  = code;
+qty indent.quantity_demanded%TYPE;
+begin 
+open a2;
+fetch a2 into qty;
+loop
+exit when a2%NOTFOUND;
+
+DbMS_OUTPUT.PUT_LINE('NO. of orders= '||qty);
+fetch a2 into qty;
+end loop;
+close a2;
+end;
+/
+
+select count(*) as NO_OF_Orders
+from ordering o2, orders o, indent i
+where o2.ITEM_CODe=i.ITEM_CODE and o.vender_no = 102 and i.ITEM_CODE  = 4;
+
+set serveroutput on;
+exec p2(102,4);
+NO_OF_Orders=1
